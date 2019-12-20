@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
 import ReactMapGL, {
-  Marker,
   GeolocateControl
 } from "react-map-gl";
-import DeckGL, { GeoJsonLayer } from "deck.gl";
-import Geocoder from "react-map-gl-geocoder";
-
-import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 const accessToken =
   "pk.eyJ1IjoicnVuYXJmIiwiYSI6ImNrNGR6MHFqejAxcnUzZXJ2and2OHdpaGoifQ.AIIRbX4IQotcSMyWX4ga5Q";
