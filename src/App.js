@@ -13,7 +13,34 @@ const getLocationPromise = () => {
   });
 };
 
+function getCoords() {
+  return new Promise((resolve, reject) =>
+    navigator.permissions
+      ? // Permission API is implemented
+        navigator.permissions
+          .query({
+            name: "geolocation"
+          })
+          .then(permission =>
+            // is geolocation granted?
+            permission.state === "granted"
+              ? navigator.geolocation.getCurrentPosition(
+                  pos => resolve(pos)
+                )
+              : reject(null)
+          )
+      : // Permission API was not implemented
+        reject(
+          new Error(
+            "Permission API is not supported"
+          )
+        )
+  );
+}
+
 const App = () => {
+  const [loading, setLoading] = useState(true);
+
   const [
     userPosition,
     setUserPosition
@@ -24,7 +51,22 @@ const App = () => {
     setErrorMessage
   ] = useState(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const getUserPositionIfAllowed = async () => {
+      try {
+        const position = await getCoords();
+        const userPosition = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+        setUserPosition(userPosition);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getUserPositionIfAllowed();
+  }, []);
 
   const getLocation = async () => {
     try {
@@ -60,7 +102,9 @@ const App = () => {
 
   return (
     <div>
-      {userPosition ? (
+      {loading ? (
+        <span>Loading...</span>
+      ) : userPosition ? (
         <Map userPosition={userPosition} />
       ) : (
         <div>
