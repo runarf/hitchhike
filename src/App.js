@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect
-} from "react";
+import React, { useState } from "react";
 import "./App.css";
 import ReactMapGL, {
   Marker,
@@ -10,7 +7,6 @@ import ReactMapGL, {
 import DeckGL, { GeoJsonLayer } from "deck.gl";
 import Geocoder from "react-map-gl-geocoder";
 
-import pin from "./pin.svg";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
@@ -23,23 +19,6 @@ const geolocateStyle = {
   padding: "10px"
 };
 
-const getUpdatedUserLocation = () => {
-  const currentPositionPromise = new Promise(
-    resolve => {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const userLocation = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          };
-          resolve(userLocation);
-        }
-      );
-    }
-  );
-  return currentPositionPromise;
-};
-
 function App() {
   const [viewport, setViewport] = useState({
     width: "100vw",
@@ -49,29 +28,8 @@ function App() {
     zoom: 16
   });
 
-  const [
-    userLocation,
-    setUserLocation
-  ] = useState(null);
-
-  const moveMapToUserLocation = async () => {
-    const updatedUserLocation = await getUpdatedUserLocation();
-    const newViewport = {
-      ...updatedUserLocation,
-      height: "100vh",
-      width: "100vw",
-      zoom: 12
-    };
-    setViewport(newViewport);
-
-    setUserLocation(updatedUserLocation);
-  };
-
   return (
     <div>
-      <button onClick={moveMapToUserLocation}>
-        My Location
-      </button>
       <div className="map">
         <ReactMapGL
           {...viewport}
@@ -88,18 +46,6 @@ function App() {
             }}
             trackUserLocation={true}
           />
-          {userLocation && (
-            <Marker
-              latitude={userLocation.latitude}
-              longitude={userLocation.longitude}
-            >
-              <img
-                className="location-icon"
-                src={pin}
-                alt="pin"
-              />
-            </Marker>
-          )}
         </ReactMapGL>
       </div>
     </div>
