@@ -1,49 +1,79 @@
-import React, { useState } from "react";
-import "./App.css";
-import ReactMapGL, {
-  GeolocateControl
-} from "react-map-gl";
+import React, {
+  useState,
+  useEffect
+} from "react";
+import Map from "./Map";
 
-const accessToken =
-  "pk.eyJ1IjoicnVuYXJmIiwiYSI6ImNrNGR6MHFqejAxcnUzZXJ2and2OHdpaGoifQ.AIIRbX4IQotcSMyWX4ga5Q";
-
-const geolocateStyle = {
-  float: "left",
-  margin: "50px",
-  padding: "10px"
+const getLocationPromise = () => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      position => resolve(position),
+      error => reject(error)
+    );
+  });
 };
 
-function App() {
-  const [viewport, setViewport] = useState({
-    width: "100vw",
-    height: "100vh",
-    latitude: 42.430472,
-    longitude: -123.334102,
-    zoom: 16
-  });
+const App = () => {
+  const [
+    userPosition,
+    setUserPosition
+  ] = useState(null);
+
+  const [
+    errorMessage,
+    setErrorMessage
+  ] = useState(null);
+
+  useEffect(() => {}, []);
+
+  const getLocation = async () => {
+    try {
+      const position = await getLocationPromise();
+      const userPosition = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      };
+      setUserPosition(userPosition);
+    } catch (error) {
+      let newErrorMessage;
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          newErrorMessage =
+            "User denied the request for Geolocation.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          newErrorMessage =
+            "Location information is unavailable.";
+          break;
+        case error.TIMEOUT:
+          newErrorMessage =
+            "The request to get user location timed out.";
+          break;
+        case error.UNKNOWN_ERROR:
+          newErrorMessage =
+            "An unknown error occurred.";
+          break;
+      }
+      setErrorMessage(newErrorMessage);
+    }
+  };
 
   return (
     <div>
-      <div className="map">
-        <ReactMapGL
-          {...viewport}
-          onViewportChange={viewport =>
-            setViewport(viewport)
-          }
-          mapStyle="mapbox://styles/mapbox/outdoors-v11"
-          mapboxApiAccessToken={accessToken}
-        >
-          <GeolocateControl
-            style={geolocateStyle}
-            positionOptions={{
-              enableHighAccuracy: true
-            }}
-            trackUserLocation={true}
-          />
-        </ReactMapGL>
-      </div>
+      {userPosition ? (
+        <Map userPosition={userPosition} />
+      ) : (
+        <div>
+          <button onClick={getLocation}>
+            Get your location
+          </button>
+          {errorMessage && (
+            <span>{errorMessage}</span>
+          )}
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;
