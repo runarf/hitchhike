@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import ReactMapGL, {
-  GeolocateControl
+  GeolocateControl,
+  Marker
 } from "react-map-gl";
+import Pin from "./pin";
 
 const accessToken =
   "pk.eyJ1IjoicnVuYXJmIiwiYSI6ImNrNGR6MHFqejAxcnUzZXJ2and2OHdpaGoifQ.AIIRbX4IQotcSMyWX4ga5Q";
@@ -20,6 +22,18 @@ const Map = ({ userPosition }) => {
     zoom: 16
   });
 
+  const [
+    originMarker,
+    setOriginMarker
+  ] = useState({
+    ...userPosition
+  });
+
+  const [
+    destinationMarker,
+    setDestinationMarker
+  ] = useState(null);
+
   return (
     <div>
       <div className="map">
@@ -31,6 +45,20 @@ const Map = ({ userPosition }) => {
           mapStyle="mapbox://styles/mapbox/satellite-v9"
           mapboxApiAccessToken={accessToken}
         >
+          <Marker
+            {...originMarker}
+            draggable
+            offsetTop={-20}
+            offsetLeft={-10}
+            onDragEnd={event =>
+              setOriginMarker({
+                longitude: event.lngLat[0],
+                latitude: event.lngLat[1]
+              })
+            }
+          >
+            <Pin size={20} />
+          </Marker>
           <GeolocateControl
             style={geolocateStyle}
             positionOptions={{
