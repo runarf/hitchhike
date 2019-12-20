@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.js": "/hitchhike/static/js/main.1c1144c0.chunk.js",
+    "main.js.map": "/hitchhike/static/js/main.1c1144c0.chunk.js.map",
+    "runtime-main.js": "/hitchhike/static/js/runtime-main.2e072454.js",
+    "runtime-main.js.map": "/hitchhike/static/js/runtime-main.2e072454.js.map",
+    "static/css/2.61091e02.chunk.css": "/hitchhike/static/css/2.61091e02.chunk.css",
+    "static/js/2.4cd60aa5.chunk.js": "/hitchhike/static/js/2.4cd60aa5.chunk.js",
+    "static/js/2.4cd60aa5.chunk.js.map": "/hitchhike/static/js/2.4cd60aa5.chunk.js.map",
+    "index.html": "/hitchhike/index.html",
+    "precache-manifest.208636e419d9929349d20271d0f61e70.js": "/hitchhike/precache-manifest.208636e419d9929349d20271d0f61e70.js",
+    "service-worker.js": "/hitchhike/service-worker.js",
+    "static/css/2.61091e02.chunk.css.map": "/hitchhike/static/css/2.61091e02.chunk.css.map",
+    "static/js/2.4cd60aa5.chunk.js.LICENSE": "/hitchhike/static/js/2.4cd60aa5.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2e072454.js",
+    "static/css/2.61091e02.chunk.css",
+    "static/js/2.4cd60aa5.chunk.js",
+    "static/js/main.1c1144c0.chunk.js"
+  ]
+}
