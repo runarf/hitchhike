@@ -6,12 +6,19 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^24.0.24",
+    "@types/mapbox-gl": "^1.6.1",
+    "@types/node": "^12.12.21",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
     "deck.gl": "^7.3.9",
+    "mapbox-gl": "^1.6.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-map-gl": "^5.1.5",
     "react-map-gl-geocoder": "^2.0.11",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "typescript": "^3.7.3"
   },
   "scripts": {
     "start": "react-scripts start",

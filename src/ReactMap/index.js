@@ -39,9 +39,10 @@ const Map = ({ userPosition }) => {
   ] = useState(null);
 
   const handleGeocoderViewportChange = viewport => {
-    const geocoderDefaultOverrides = {
-      transitionDuration: 1000
-    };
+    setDestinationMarker({
+      latitude: viewport.latitude,
+      longitude: viewport.longitude
+    });
 
     setViewport(viewport);
   };
@@ -65,6 +66,13 @@ const Map = ({ userPosition }) => {
             mapRef={mapRef}
             mapboxApiAccessToken={accessToken}
           />
+          <GeolocateControl
+            style={geolocateStyle}
+            positionOptions={{
+              enableHighAccuracy: true
+            }}
+            trackUserLocation={true}
+          />
           <Marker
             {...originMarker}
             draggable
@@ -79,13 +87,15 @@ const Map = ({ userPosition }) => {
           >
             <Pin size={20} />
           </Marker>
-          <GeolocateControl
-            style={geolocateStyle}
-            positionOptions={{
-              enableHighAccuracy: true
-            }}
-            trackUserLocation={true}
-          />
+          {destinationMarker && (
+            <Marker
+              {...destinationMarker}
+              offsetTop={-20}
+              offsetLeft={-10}
+            >
+              <Pin size={40} />
+            </Marker>
+          )}
         </ReactMapGL>
       </div>
     </div>
